@@ -1,0 +1,23 @@
+@model Wigo.ViewModels.TrackingSubmitViewModel
+
+<form method="post" asp-action="Submit" asp-route-token="@Model.Token" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Token" />
+    <input type="hidden" asp-for="Expense.Id" />
+
+    <div class="mb-3">
+        <label asp-for="Expense.ProjectId" class="form-label">Dự án</label>
+        <select asp-for="Expense.ProjectId" class="form-select" asp-items="ViewBag.Projects as SelectList"></select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Expense.Amount" class="form-label">Số tiền (₫)</label>
+        <input asp-for="Expense.Amount" class="form-control" type="number" step="10000" min="0" required />
+    </div>
+
+    <div class="mb-3">
+        <label>Tệp đính kèm</label>
+        <input type="file" name="uploadedFile" class="form-control" accept="image/*,application/pdf" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Gửi hóa đơn</button>
+</form>

@@ -1,0 +1,73 @@
+@model Wigo.Models.Entities.Expense
+
+<div class="row mb-3">
+    <div class="col-md-4">
+        <h4>@Model.Project.Name</h4>
+    </div>
+    <div class="col-md-4">
+        <span class="badge @(Model.Status == Wigo.Models.Enums.ExpenseStatus.Pending ? "badge-pending" : Model.Status == Wigo.Models.Enums.ExpenseStatus.NeedsMore ? "badge-needsmore" : Model.Status == Wigo.Models.Enums.ExpenseStatus.Recorded ? "badge-recorded" : "badge-rejected")" style="background-color: #fff;">
+            @Model.Status
+        </span>
+    </div>
+    <div class="col-md-4">
+        <a asp-controller="Expenses" asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">ID</dt>
+            <dd class="col-sm-9">@Model.Id</dd>
+
+            <dt class="col-sm-3">Dự án</dt>
+            <dd class="col-sm-9">@Model.Project.Name</dd>
+
+            <dt class="col-sm-3">Danh mục</dt>
+            <dd class="col-sm-9">@Model.Category?.Name ?? "Không có"</dd>
+
+            <dt class="col-sm-3">Số tiền</dt>
+            <dd class="col-sm-9">@Model.Amount.Format() ₫</dd>
+
+            <dt class="col-sm-3">Trạng thái</dt>
+            <dd class="col-sm-9">
+                <span class="badge @(Model.Status == Wigo.Models.Enums.ExpenseStatus.Pending ? "badge-pending" : Model.Status == Wigo.Models.Enums.ExpenseStatus.NeedsMore ? "badge-needsmore" : Model.Status == Wigo.Models.Enums.ExpenseStatus.Recorded ? "badge-recorded" : "badge-rejected")">@Model.Status</span>
+            </dd>
+
+            <dt class="col-sm-3">Người nộp</dt>
+            <dd class="col-sm-9">@Model.SubmittedBy</dd>
+
+            <dt class="col-sm-3">Ngày nộp</dt>
+            <dd class="col-sm-9">@Model.SubmittedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+
+            <dt class="col-sm-3">Người duyệt</dt>
+            <dd class="col-sm-9">@Model.ReviewedBy.HasValue ? $"{(User.Identity?.Name ?? "")}" : "Chưa duyệt"</dd>
+
+            <dt class="col-sm-3">Ngày duyệt</dt>
+            <dd class="col-sm-9">@Model.ReviewedAt.HasValue ? Model.ReviewedAt.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa duyệt"</dd>
+
+            <dt class="col-sm-3">Lý do duyệt</dt>
+            <dd class="col-sm-9">@Model.ReviewNotes</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="mt-3">
+    <h5>Tệp chứng minh</h5>
+    @if (Model.EvidenceFiles.Any())
+    {
+        <ul class="list-group">
+            @foreach (var evidence in Model.EvidenceFiles)
+            {
+                <li class="list-group-item">
+                    <a href="@evidence.BlobUrl" target="_blank">@evidence.FileName</a>
+                    (@evidence.FileSize > 0 ? $"{evidence.FileSize / 1024} KB" : "Unknown size")
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Không có tệp chứng minh</p>
+    }
+</div>

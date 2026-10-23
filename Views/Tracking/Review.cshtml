@@ -1,0 +1,33 @@
+@model Wigo.ViewModels.TrackingReviewViewModel
+
+<h4>Hồ sơ hóa đơn của bạn</h4>
+
+<table class="table table-bordered table-striped mb-3">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Số tiền</th>
+            <th>Trạng thái</th>
+            <th>Ngày nộp</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var expense in Model.Expenses)
+        {
+            <tr>
+                <td>@expense.Id</td>
+                <td>@expense.Amount.Format()</td>
+                <td>
+                    <span class="badge @(expense.Status == Wigo.Models.Enums.ExpenseStatus.Recorded ? "bg-success" : expense.Status == Wigo.Models.Enums.ExpenseStatus.NeedsMore ? "bg-info" : "bg-warning")">
+                        @expense.Status
+                    </span>
+                </td>
+                <td>@expense.SubmittedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    <a asp-action="Resubmit" asp-route-token="@Model.Token" asp-route-expenseId="@expense.Id" class="btn btn-sm btn-outline-primary">Lại nộp</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

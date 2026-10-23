@@ -1,0 +1,29 @@
+@model Wigo.ViewModels.TrackingBillsViewModel
+
+<h4>Danh sách hóa đơn đã ghi nhận</h4>
+
+<table class="table table-bordered table-striped mb-3">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Số tiền</th>
+            <th>Trạng thái</th>
+            <th>Ngày nộp</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var expense in Model.Expenses)
+        {
+            <tr>
+                <td>@expense.Id</td>
+                <td>@expense.Amount.Format()</td>
+                <td>
+                    <span class="badge @(expense.Status == Wigo.Models.Enums.ExpenseStatus.Recorded ? "bg-success" : expense.Status == Wigo.Models.Enums.ExpenseStatus.NeedsMore ? "bg-info" : "bg-warning")">
+                        @expense.Status
+                    </span>
+                </td>
+                <td>@expense.SubmittedAt.ToString("dd/MM/yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>

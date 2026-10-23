@@ -1,0 +1,87 @@
+@model Wigo.ViewModels.ProjectDetailsViewModel
+
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1>@Model.Name</h1>
+        <div class="row">
+            <div class="col-sm-3">
+                <strong>Trạng thái:</strong> <span class="badge bg-@(Model.Status == 0 ? "secondary" : Model.Status == 1 ? "warning" : "danger")">@(Model.Status == 0 ? "Hoạt động" : Model.Status == 1 ? "Chuẩn bị" : "Đóng")</span>
+            </div>
+            <div class="col-sm-3">
+                <strong>Ngân sách:</strong> @Model.Budget.Format()
+            </div>
+            <div class="col-sm-3">
+                <strong>Công khai:</strong> @(Model.PublicEnabled ? "Có" : "Không")
+            </div>
+            <div class="col-sm-3">
+                <strong>Mở nộp:</strong> @(Model.SubmissionsOpen ? "Có" : "Không")
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4>Danh mục chi phí</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tên danh mục</th>
+            <th>Phân bổ</th>
+            <th>Chi tiêu</th>
+            <th>Còn lại</th>
+            <th>Màu</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model.Categories)
+        {
+            <tr>
+                <td>@category.Name</td>
+                <td>@category.BudgetAllocated.ToString("N0") ₫</td>
+                <td>@category.SpentAmount.ToString("N0") ₫</td>
+                <td>@category.Remaining.ToString("N0") ₫</td>
+                <td>
+                    <div class="w-100 h-25" style="background-color: @category.Color; border-radius: 4px;"></div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h4>Danh sách chi phí</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Số tiền</th>
+            <th>Trạng thái</th>
+            <th>Người nộp</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var expense in Model.Expenses)
+        {
+            <tr>
+                <td>@expense.Id</td>
+                <td>@expense.Amount.Format()</td>
+                <td>
+                    <span class="badge bg-@(
+                        (int)expense.Status == 0 ? "secondary" :
+                        (int)expense.Status == 1 ? "warning" :
+                        (int)expense.Status == 2 ? "success" : "danger"
+                    )">@(
+                        (int)expense.Status == 0 ? "Chờ duyệt" :
+                        (int)expense.Status == 1 ? "Cần thêm" :
+                        (int)expense.Status == 2 ? "Đã ghi nhận" :
+                        "Từ chối"
+                    )</span>
+                </td>
+                <td>@expense.SubmittedBy</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary me-2">Sửa</a>
+    <a asp-action="Index" asp-controller="Projects" class="btn btn-secondary">Quay lại danh sách</a>
+</div>

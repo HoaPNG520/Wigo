@@ -1,0 +1,10 @@
+<div class="text-center py-5">
+    <h2 class="text-success mb-3">Thành công!</h2>
+    <p>Hóa đơn đã được gửi thành công!</p>
+    <hr />
+    <p><strong>Token:</strong> @ViewData["Token"]</p>
+    <div class="mt-4">
+        <a asp-action="Review" asp-route-token="@ViewData["Token"]" class="btn btn-primary">Xem hóa đơn</a>
+        <a asp-action="Submit" asp-route-token="@ViewData["Token"]" class="btn btn-outline-primary">Nộp hóa đơn khác</a>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+@model List<Wigo.ViewModels.ProjectIndexViewModel>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Danh sách dự án</h2>
+    <a asp-action="Create" asp-controller="Projects" class="btn btn-primary">Tạo mới</a>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Tên dự án</th>
+            <th>Trạng thái</th>
+            <th>Ngân sách</th>
+            <th>Đã chi</th>
+            <th>Công khai</th>
+            <th>Mở nộp</th>
+            <th>Chi phí</th>
+            <th>Tạo lúc</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>
+                    <span class="badge bg-@(item.Status == 0 ? "secondary" : item.Status == 1 ? "warning" : "danger")">
+                        @(item.Status == 0 ? "Hoạt động" : item.Status == 1 ? "Chuẩn bị" : "Đóng")
+                    </span>
+                </td>
+                <td>@item.Budget.Format()</td>
+                <td>@item.BaseSpent.Format()</td>
+                <td>@(item.PublicEnabled ? "Có" : "Không")</td>
+                <td>@(item.SubmissionsOpen ? "Có" : "Không")</td>
+                <td>@item.ExpenseCount</td>
+                <td>@item.CreatedAt.ToString("dd/MM/yyyy")</td>
+            </tr>
+        }
+    </tbody>
+</table>

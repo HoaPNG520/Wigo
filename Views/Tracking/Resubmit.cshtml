@@ -1,0 +1,20 @@
+@model Wigo.ViewModels.TrackingResubmitViewModel
+
+<form method="post" asp-action="Resubmit" asp-route-token="@Model.Token" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Token" />
+    <input type="hidden" asp-for="Expense.Id" />
+
+    <input type="hidden" asp-for="ExpenseId" />
+
+    <div class="mb-3">
+        <label asp-for="Expense.Amount" class="form-label">Số tiền mới (₫)</label>
+        <input asp-for="Expense.Amount" class="form-control" type="number" step="10000" min="0" required />
+    </div>
+
+    <div class="mb-3">
+        <label>Tệp đính kèm mới</label>
+        <input type="file" name="uploadedFile" class="form-control" accept="image/*,application/pdf" />
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Gửi lại</button>
+</form>

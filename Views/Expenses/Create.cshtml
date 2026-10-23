@@ -1,0 +1,39 @@
+@model Wigo.ViewModels.ExpenseCreateViewModel
+
+<form method="POST" asp-controller="Expenses" asp-action="Create" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="ProjectId" class="form-label">Dự án</label>
+            <select asp-for="ProjectId" asp-items="Model.Projects" class="form-select">
+                <option value="">-- Chọn dự án --</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="CategoryId" class="form-label">Danh mục</label>
+            <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select">
+                <option value="">-- Chọn danh mục --</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="Amount" class="form-label">Số tiền</label>
+            <input asp-for="Amount" class="form-control" />
+        </div>
+    </div>
+
+<div class="row mb-3">
+        <div class="col-md-6">
+            <label class="form-label">Tệp đính kèm</label>
+            <input type="file" name="uploadedFile" class="form-control" accept=".pdf,.jpg,.png,.doc,.docx" />
+        </div>
+</div>
+
+    <div class="d-grid gap-2 mt-4">
+        <button type="submit" class="btn btn-primary">Lưu chi phí</button>
+        <a asp-controller="Expenses" asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </div>
+</form>

@@ -1,0 +1,97 @@
+@model Wigo.ViewModels.ExpenseIndexViewModel
+
+@using Wigo.Models.Enums
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Danh sách chi phí</h2>
+    <a asp-controller="Expenses" asp-action="Create" class="btn btn-primary">Tạo chi phí mới</a>
+</div>
+
+<form method="GET" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <select asp-for="StatusFilter" class="form-select">
+            <option value="">Tất cả trạng thái</option>
+            <option value="Pending">Chờ xử lý</option>
+            <option value="NeedsMore">Cần thêm thông tin</option>
+            <option value="Recorded">Đã ghi nhận</option>
+            <option value="Rejected">Từ chối</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select asp-for="ProjectFilter" class="form-select">
+            <option value="">Tất cả dự án</option>
+            @foreach (var item in Model.Projects)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <input type="date" name="startDate" class="form-control" value="@(Model.StartDate?.ToString("yyyy-MM-dd") ?? "")" />
+    </div>
+    <div class="col-md-2">
+        <input type="date" name="endDate" class="form-control" value="@(Model.EndDate?.ToString("yyyy-MM-dd") ?? "")" />
+    </div>
+    <div class="col-md-1">
+        <button type="submit" class="btn btn-outline-secondary w-100">Lọc</button>
+    </div>
+</form>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Dự án</th>
+            <th>Số tiền</th>
+            <th>Trạng thái</th>
+            <th>Người nộp</th>
+            <th>Ngày nộp</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var expense in Model.Expenses)
+        {
+            <tr>
+                <td>@expense.Id</td>
+                <td>@expense.Project.Name</td>
+                <td>@expense.Amount.Format()</td>
+                <td>
+                    <span class="badge @(expense.Status == ExpenseStatus.Pending ? "badge-pending" : expense.Status == ExpenseStatus.NeedsMore ? "badge-needsmore" : expense.Status == ExpenseStatus.Recorded ? "badge-recorded" : "badge-rejected")">
+                        @expense.Status
+                    </span>
+                </td>
+                <td>@expense.SubmittedBy</td>
+                <td>@expense.SubmittedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    <a asp-controller="Expenses" asp-action="Details" asp-route-id="@expense.Id" class="btn btn-sm btn-outline-primary">Chi tiết</a>
+                    <form asp-controller="Expenses" asp-action="Approve" asp-route-id="@expense.Id" method="POST" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-outline-success" onclick="return confirm('Xác nhận duyệt?')">Duyệt</button>
+                    </form>
+                    <form asp-controller="Expenses" asp-action="Reject" asp-route-id="@expense.Id" method="POST" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Xác nhận từ chối?')">Từ chối</button>
+                    </form>
+                    <form asp-controller="Expenses" asp-action="NeedsMore" asp-route-id="@expense.Id" method="POST" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-outline-warning" onclick="return confirm('Xác nhận yêu cầu thêm thông tin?')">Cần thêm</button>
+                    </form>
+                    <a asp-controller="Expenses" asp-action="Edit" asp-route-id="@expense.Id" class="btn btn-sm btn-outline-secondary">Sửa</a>
+                    <form asp-controller="Expenses" asp-action="Delete" asp-route-id="@expense.Id" method="POST" style="display:inline" onclick="return confirm('Xác nhận xóa?')">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.Expenses.Count == 0)
+{
+    <div class="alert alert-info mt-3">Không có chi phí nào phù hợp với các bộ lọc đã chọn.</div>
+}
+
+<style>
+    .badge-pending { color: #5f31a8; background-color: #fffbeb; }
+    .badge-needsmore { color: #5f31a8; background-color: #fff0f0; }
+    .badge-recorded { color: #5f31a8; background-color: #f0fff0; }
+    .badge-rejected { color: #5f31a8; background-color: #fbf0f0; }
+</style>

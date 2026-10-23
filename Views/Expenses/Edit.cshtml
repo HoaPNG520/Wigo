@@ -1,0 +1,47 @@
+@model Wigo.ViewModels.ExpenseEditViewModel
+
+<form method="POST" asp-controller="Expenses" asp-action="Edit" asp-route-id="@Model.Id">
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="ProjectId" class="form-label">Dự án</label>
+            <select asp-for="ProjectId" asp-items="Model.Projects" class="form-select">
+                <option value="">-- Chọn dự án --</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="CategoryId" class="form-label">Danh mục</label>
+            <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select">
+                <option value="">-- Chọn danh mục --</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="Amount" class="form-label">Số tiền</label>
+            <input asp-for="Amount" class="form-control" />
+        </div>
+    </div>
+
+    <input type="hidden" asp-for="Status" />
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="SubmittedBy" class="form-label">Người nộp</label>
+            <input asp-for="SubmittedBy" class="form-control" readonly />
+        </div>
+        <div class="col-md-6">
+            <label asp-for="ReviewNotes" class="form-label">Lý do duyệt/từ chối</label>
+            <textarea asp-for="ReviewNotes" class="form-control" rows="2"></textarea>
+        </div>
+    </div>
+
+    <div class="d-grid gap-2 mt-4">
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+        <a asp-controller="Expenses" asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </div>
+</form>

@@ -1,0 +1,33 @@
+@model Wigo.ViewModels.PublicPortalViewModel
+
+<div class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <h2>@Model.Title</h2>
+                <hr />
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <small>Ngân sách</small>
+                        <h3>@Model.Budget</h3>
+                    </div>
+                    <div class="col-6">
+                        <small>Đã chi</small>
+                        <h3>@Model.BaseSpent</h3>
+                    </div>
+                </div>
+
+                <div>
+                    <small>Trạng thái: <span class="badge bg-@(Model.Status == Wigo.Models.Enums.ProjectStatus.Active ? "success" : Model.Status == Wigo.Models.Enums.ProjectStatus.Closed ? "secondary" : "warning")">@Model.Status</span></small>
+                </div>
+
+                <div class="mt-4">
+                    <small>@(Model.PublicEnabled ? "Mở nhận nộp" : "Đóng nhận nộp")</small>
+                    <br />
+                    @(Model.SubmissionsOpen ? "Đang mở nhận hóa đơn" : "Đóng nhận hóa đơn")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.EntityFrameworkCore" />
+<Using Include="System.IO" />
+<Using Include="Wigo.Models" />
+    <Using Include="Wigo.Models.Entities" />
+    <Using Include="Wigo.Models.Enums" />
+    <Using Include="Wigo.Models.ValueObjects" />
+    <Using Include="Wigo.Services" />
+    <Using Include="Microsoft.AspNetCore.Mvc.Rendering" />
+  </ItemGroup>
+
+</Project>
