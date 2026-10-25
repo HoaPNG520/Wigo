@@ -1,4 +1,122 @@
-/* Wigo styles */
+/* Wigo styles - UEH-UII-sandbox design system */
+:root {
+	--brand-purple: #5f31a8;
+	--bg-background: #f8f7f4;
+	--fg-ink: #241d2f;
+	--brand-cream: #fff6e8;
+	--brand-orange: #f49e1b;
+	--secondary: #f1edf7;
+	--muted: #f0efec;
+	--border: #e3e0e6;
+	--radius: 0.625rem;
+	--font-family: "Be Vietnam Pro", sans-serif;
+}
+
+/* Font import */
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+/* Base styles */
+html {
+	background-color: var(--bg-background);
+	font-family: var(--font-family);
+}
+
 body {
-    font-family: sans-serif;
+	color: var(--fg-ink);
+	margin-bottom: 60px;
+}
+
+/* Utility classes */
+.text-balance {
+	text-wrap: balance;
+}
+
+.money {
+	font-variant-numeric: proportional-nums;
+}
+
+.subtle-grid {
+	background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath color='var(--muted)' opacity='0.3' d='M0 0h40v40H0V0zm39 19h-2l-7-7-1 1L3 20l6 6L19 26l7-7h2V19z'/%3E%3C/svg%3C");
+	background-size: 8px 8px;
+}
+
+/* Component: RoleCard */
+.role-card {
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	padding: 1.5rem;
+	background: white;
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.role-card:hover {
+	border-color: var(--brand-purple);
+}
+
+.role-card.featured {
+	border-color: var(--brand-purple);
+	box-shadow: 0 4px 20px rgba(95, 49, 168, 0.15);
+}
+
+/* Component: Button */
+.btn {
+	border-radius: var(--radius);
+}
+
+.btn-primary {
+	background-color: var(--brand-purple);
+	border-color: var(--brand-purple);
+	color: white;
+}
+
+.btn-primary:hover {
+	background-color: #4a2890;
+	border-color: #4a2890;
+}
+
+.btn-outline {
+	background: transparent;
+	border: 1px solid var(--border);
+	color: var(--fg-ink);
+}
+
+.btn-outline:hover {
+	border-color: var(--brand-purple);
+	color: var(--brand-purple);
+}
+
+.btn-ghost {
+	background: transparent;
+	border: none;
+	color: var(--fg-ink);
+	padding: 0;
+	font: inherit;
+}
+
+.btn-ghost:hover {
+	color: var(--brand-purple);
+}
+
+/* Component: Header */
+.site-header {
+	background: white;
+	border-bottom: 1px solid var(--border);
+	background: rgba(248, 247, 244, 0.9);
+	backdrop-filter: blur(10px);
+}
+
+/* Hero heading */
+.h1, h1 {
+	color: var(--brand-purple);
+}
+
+/* Featured badge */
+.featured-badge {
+	background: var(--brand-purple);
+	color: white;
+	padding: 0.25rem 0.75rem;
+	border-radius: var(--radius);
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
 }
