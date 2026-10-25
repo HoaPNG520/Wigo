@@ -170,11 +170,29 @@ namespace Wigo.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("FundingSource")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("InvoiceNumber")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<bool>("IsFresh")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Payer")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)");
+
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
 
                     b.Property<string>("ReviewNotes")
-                        .IsRequired()
                         .HasColumnType("varchar(500)");
 
                     b.Property<DateTime?>("ReviewedAt")
@@ -182,6 +200,9 @@ namespace Wigo.Migrations
 
                     b.Property<int?>("ReviewedBy")
                         .HasColumnType("integer");
+
+                    b.Property<short>("Risk")
+                        .HasColumnType("smallint");
 
                     b.Property<short>("Status")
                         .HasColumnType("smallint");
@@ -193,11 +214,23 @@ namespace Wigo.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(200)");
 
+                    b.Property<string>("Time")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)");
+
                     b.Property<int?>("TrackingTokenId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Vendor")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)");
 
                     b.HasKey("Id");
 
@@ -210,6 +243,31 @@ namespace Wigo.Migrations
                     b.HasIndex("TrackingTokenId");
 
                     b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("Wigo.Models.Entities.ExpenseItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ExpenseId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExpenseId");
+
+                    b.ToTable("ExpenseItems", (string)null);
                 });
 
             modelBuilder.Entity("Wigo.Models.Entities.ExpenseOcrResult", b =>
@@ -500,6 +558,40 @@ namespace Wigo.Migrations
                     b.Navigation("TrackingToken");
                 });
 
+            modelBuilder.Entity("Wigo.Models.Entities.ExpenseItem", b =>
+                {
+                    b.HasOne("Wigo.Models.Entities.Expense", "Expense")
+                        .WithMany("Items")
+                        .HasForeignKey("ExpenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("Wigo.Models.ValueObjects.Money", "UnitPrice", b1 =>
+                        {
+                            b1.Property<int>("ExpenseItemId")
+                                .HasColumnType("integer");
+
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("decimal(18,2)");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasColumnType("varchar(10)");
+
+                            b1.HasKey("ExpenseItemId");
+
+                            b1.ToTable("ExpenseItems");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ExpenseItemId");
+                        });
+
+                    b.Navigation("Expense");
+
+                    b.Navigation("UnitPrice")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Wigo.Models.Entities.ExpenseOcrResult", b =>
                 {
                     b.HasOne("Wigo.Models.Entities.Expense", "Expense")
@@ -580,6 +672,8 @@ namespace Wigo.Migrations
             modelBuilder.Entity("Wigo.Models.Entities.Expense", b =>
                 {
                     b.Navigation("EvidenceFiles");
+
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("Wigo.Models.Entities.Organization", b =>

@@ -15,11 +15,21 @@ public class Expense
     public DateTime SubmittedAt { get; set; }
     public int? ReviewedBy { get; set; }
     public DateTime? ReviewedAt { get; set; }
-    public string ReviewNotes { get; set; } = "";
+    public string? ReviewNotes { get; set; }
     public double? AiConfidence { get; set; }
     public string AiExtractedFields { get; set; } = "";
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+    public string Title { get; set; } = "";
+    public string Payer { get; set; } = "";
+    public string Time { get; set; } = "";
+    public string Date { get; set; } = "";
+    public string FundingSource { get; set; } = "";
+    public string Vendor { get; set; } = "";
+    public string InvoiceNumber { get; set; } = "";
+    public RiskLevel Risk { get; set; } = RiskLevel.None;
+    public bool IsFresh { get; set; }
+    public virtual List<ExpenseItem> Items { get; set; } = new();
 
     public virtual Project Project { get; set; } = null!;
     public virtual BudgetCategory? Category { get; set; }

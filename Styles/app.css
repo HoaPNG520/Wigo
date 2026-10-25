@@ -1,0 +1,198 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "./fonts.css";
+@source "../Views";
+@source "../wwwroot/js";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #f8f7f4;
+  --foreground: #241d2f;
+  --card: #ffffff;
+  --card-foreground: #241d2f;
+  --popover: #ffffff;
+  --popover-foreground: #241d2f;
+  --primary: #5f31a8;
+  --primary-foreground: #ffffff;
+  --secondary: #f1edf7;
+  --secondary-foreground: #452968;
+  --muted: #f0efec;
+  --muted-foreground: #6f6878;
+  --accent: #fff1dc;
+  --accent-foreground: #6b3a08;
+  --destructive: #b83b45;
+  --border: #e3e0e6;
+  --input: #d9d5de;
+  --ring: #7a4bc1;
+  --chart-1: #5f31a8;
+  --chart-2: #f49e1b;
+  --chart-3: #8f6bc5;
+  --chart-4: #2f7d68;
+  --chart-5: #c65e48;
+  --radius: 0.625rem;
+  --sidebar: #281a3d;
+  --sidebar-foreground: #f8f5fc;
+  --sidebar-primary: #f7a925;
+  --sidebar-primary-foreground: #2b193e;
+  --sidebar-accent: #3a2851;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgb(255 255 255 / 10%);
+  --sidebar-ring: #f7a925;
+  --font-be-vietnam: 'Be Vietnam Pro', system-ui, sans-serif;
+
+  --brand-purple: #5f31a8;
+  --brand-purple-deep: #452968;
+  --brand-ink: #281a3d;
+  --brand-orange: #f49e1b;
+  --brand-yellow: #fbce30;
+  --brand-cream: #fff6e8;
+  --success: #27745f;
+  --success-soft: #e8f3ee;
+  --warning: #9b650c;
+  --warning-soft: #fff4d9;
+  --danger-soft: #fae9ea;
+  --info: #315f92;
+  --info-soft: #eaf1f8;
+}
+
+.dark {
+  --background: #1c1525;
+  --foreground: #f8f5fc;
+  --card: #281e34;
+  --card-foreground: #f8f5fc;
+  --popover: #281e34;
+  --popover-foreground: #f8f5fc;
+  --primary: #b894ed;
+  --primary-foreground: #231532;
+  --secondary: #382c45;
+  --secondary-foreground: #f8f5fc;
+  --muted: #33283f;
+  --muted-foreground: #bdb5c5;
+  --accent: #4a351e;
+  --accent-foreground: #ffd999;
+  --destructive: #f08a91;
+  --border: rgb(255 255 255 / 12%);
+  --input: rgb(255 255 255 / 16%);
+  --ring: #b894ed;
+  --sidebar: #17101f;
+  --sidebar-foreground: #f8f5fc;
+  --sidebar-primary: #f7a925;
+  --sidebar-primary-foreground: #231532;
+  --sidebar-accent: #342541;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgb(255 255 255 / 10%);
+  --sidebar-ring: #f7a925;
+}
+
+@theme inline {
+  --font-sans: var(--font-be-vietnam);
+  --font-heading: var(--font-be-vietnam);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-purple-deep: var(--brand-purple-deep);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-yellow: var(--brand-yellow);
+  --color-brand-cream: var(--brand-cream);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+
+  html {
+    @apply bg-background font-sans;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 bg-background text-foreground antialiased;
+    min-width: 320px;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "ss01" 1, "tnum" 1;
+  }
+
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: #eadcfb;
+    color: #281a3d;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .money {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .subtle-grid {
+    background-image:
+      linear-gradient(to right, rgb(69 41 104 / 4%) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(69 41 104 / 4%) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+}

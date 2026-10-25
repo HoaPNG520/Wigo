@@ -20,6 +20,7 @@ public class UiiDbContext : DbContext
     public DbSet<ExpenseOcrResult> ExpenseOcrResults { get; set; }
     public DbSet<AuditLog> AuditLogs { get; set; }
     public DbSet<TrackingToken> TrackingTokens { get; set; }
+    public DbSet<ExpenseItem> ExpenseItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -132,6 +133,34 @@ public class UiiDbContext : DbContext
 
             // Configure Money Amount as owned
             entity.OwnsOne(e => e.Amount, ba =>
+            {
+                ba.Property(b => b.Amount).HasColumnType("decimal(18,2)");
+                ba.Property(b => b.Currency).HasColumnType("varchar(10)");
+            });
+
+            // Configure new fields
+            entity.Property(e => e.Title).HasColumnType("varchar(200)");
+            entity.Property(e => e.Payer).HasColumnType("varchar(200)");
+            entity.Property(e => e.Time).HasColumnType("varchar(100)");
+            entity.Property(e => e.FundingSource).HasColumnType("varchar(200)");
+            entity.Property(e => e.InvoiceNumber).HasColumnType("varchar(100)");
+            entity.Property(e => e.Risk).HasColumnType("smallint");
+            entity.Property(e => e.Vendor).HasColumnType("varchar(200)");
+            entity.Property(e => e.Date).HasColumnType("varchar(20)");
+            entity.Property(e => e.IsFresh).HasColumnType("boolean");
+        });
+
+        // ExpenseItem configuration
+        modelBuilder.Entity<ExpenseItem>(entity =>
+        {
+            entity.ToTable("ExpenseItems");
+
+            entity.HasOne(e => e.Expense)
+                .WithMany(exp => exp.Items)
+                .HasForeignKey(e => e.ExpenseId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.OwnsOne(e => e.UnitPrice, ba =>
             {
                 ba.Property(b => b.Amount).HasColumnType("decimal(18,2)");
                 ba.Property(b => b.Currency).HasColumnType("varchar(10)");

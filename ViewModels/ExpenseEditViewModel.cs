@@ -12,7 +12,7 @@ public class ExpenseEditViewModel
     public decimal Amount { get; set; }
     public ExpenseStatus Status { get; set; }
     public string SubmittedBy { get; set; } = "";
-    public string ReviewNotes { get; set; } = "";
+    public string? ReviewNotes { get; set; }
     public List<SelectListItem> Projects { get; set; } = new();
     public List<SelectListItem>? Categories { get; set; }
     public string AiExtractedFields { get; set; } = "";
