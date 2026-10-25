@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,8 +15,8 @@
 
   <ItemGroup>
     <Using Include="Microsoft.EntityFrameworkCore" />
-<Using Include="System.IO" />
-<Using Include="Wigo.Models" />
+    <Using Include="System.IO" />
+    <Using Include="Wigo.Models" />
     <Using Include="Wigo.Models.Entities" />
     <Using Include="Wigo.Models.Enums" />
     <Using Include="Wigo.Models.ValueObjects" />
